@@ -1,6 +1,7 @@
 /**
  * CYGNUS 3D State Manager & Camera Choreography System
- * Manages transitions across 5 camera states: HERO, CONVERGENCE, PARAMETERS, SCANNER, FINAL.
+ * Manages smooth camera transitions across 9 continuous 3D states:
+ * HERO, CONVERGENCE, PARAMETERS, SCANNER, COMPETITIONS, TIMELINE, TERMINAL, PASS, FINAL.
  */
 
 import * as THREE from 'three';
@@ -44,13 +45,49 @@ export const CAMERA_STATES = {
     convergenceOpacity: 0.0,
     scannerOpacity: 1.0
   },
+  COMPETITIONS: {
+    name: 'COMPETITIONS',
+    cameraPos: new THREE.Vector3(-20, -5, 210),
+    cameraTarget: new THREE.Vector3(-20, -5, 0),
+    coreScale: 0.55,
+    coreOpacity: 0.2,
+    convergenceOpacity: 0.15,
+    scannerOpacity: 0.0
+  },
+  TIMELINE: {
+    name: 'TIMELINE',
+    cameraPos: new THREE.Vector3(20, 5, 220),
+    cameraTarget: new THREE.Vector3(20, 5, 0),
+    coreScale: 0.55,
+    coreOpacity: 0.2,
+    convergenceOpacity: 0.15,
+    scannerOpacity: 0.0
+  },
+  TERMINAL: {
+    name: 'TERMINAL',
+    cameraPos: new THREE.Vector3(0, 15, 200),
+    cameraTarget: new THREE.Vector3(0, 0, 0),
+    coreScale: 0.5,
+    coreOpacity: 0.18,
+    convergenceOpacity: 0.2,
+    scannerOpacity: 0.0
+  },
+  PASS: {
+    name: 'PASS',
+    cameraPos: new THREE.Vector3(0, -5, 225),
+    cameraTarget: new THREE.Vector3(0, -5, 0),
+    coreScale: 0.45,
+    coreOpacity: 0.15,
+    convergenceOpacity: 0.1,
+    scannerOpacity: 0.0
+  },
   FINAL: {
     name: 'FINAL',
     cameraPos: new THREE.Vector3(0, 0, 240),
     cameraTarget: new THREE.Vector3(0, 0, 0),
-    coreScale: 0.65,
-    coreOpacity: 0.2, // Low opacity for clean background depth behind forms & cards
-    convergenceOpacity: 0.1,
+    coreScale: 0.7,
+    coreOpacity: 0.35,
+    convergenceOpacity: 0.2,
     scannerOpacity: 0.0
   }
 };

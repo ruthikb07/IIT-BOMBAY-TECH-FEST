@@ -340,10 +340,10 @@ class CygnusApp {
     mapState('hero', 'HERO');
     mapState('concept', 'CONVERGENCE');
     mapState('scanner', 'SCANNER');
-    mapState('events', 'FINAL');
-    mapState('schedule', 'FINAL');
-    mapState('terminal', 'FINAL');
-    mapState('badge', 'FINAL');
+    mapState('events', 'COMPETITIONS');
+    mapState('schedule', 'TIMELINE');
+    mapState('terminal', 'TERMINAL');
+    mapState('badge', 'PASS');
     mapState('partners', 'FINAL');
 
     // Section headers reveal
