@@ -1,24 +1,24 @@
 :root {
-  /* Centralized Design Tokens */
-  --bg-primary: #050609;
-  --bg-secondary: #0a0d14;
-  --surface: rgba(16, 22, 34, 0.65);
-  --surface-hover: rgba(24, 32, 48, 0.85);
-  --surface-glass: rgba(10, 13, 20, 0.8);
+  /* Centralized Design Tokens (Dark Cinematic Research Visualization) */
+  --bg-primary: #05070a;
+  --bg-secondary: #0a1016;
+  --surface: rgba(10, 16, 26, 0.7);
+  --surface-hover: rgba(16, 24, 38, 0.85);
+  --surface-glass: rgba(8, 12, 20, 0.85);
 
-  --text-primary: #f1f5f9;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
+  --text-primary: #ffffff;
+  --text-secondary: #8a99b5;
+  --text-muted: #52637a;
 
   --accent-cyan: #00f3ff;
   --accent-green: #10b981;
   --accent-amber: #ffaa00;
   --accent-indigo: #5e5ce6;
 
-  --border: rgba(0, 243, 255, 0.18);
-  --border-dim: rgba(255, 255, 255, 0.08);
-  --border-active: rgba(0, 243, 255, 0.6);
-  --glow: rgba(0, 243, 255, 0.25);
+  --border: rgba(0, 243, 255, 0.15);
+  --border-dim: rgba(255, 255, 255, 0.06);
+  --border-active: rgba(0, 243, 255, 0.5);
+  --glow: rgba(0, 243, 255, 0.2);
 
   --font-display: 'Orbitron', 'Space Grotesk', sans-serif;
   --font-body: 'Inter', system-ui, -apple-system, sans-serif;
@@ -34,7 +34,7 @@
   --bg-card-hover: var(--surface-hover);
   --cyan-core: var(--accent-cyan);
   --cyan-glow: var(--glow);
-  --cyan-subtle: rgba(0, 243, 255, 0.08);
+  --cyan-subtle: rgba(0, 243, 255, 0.06);
   --amber-hud: var(--accent-amber);
   --border-hud: var(--border);
   --text-main: var(--text-primary);
