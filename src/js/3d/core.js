@@ -1,7 +1,7 @@
 /**
- * CYGNUS Core — Primary 3D Visual Object (Refined & Cinematic)
- * 6-Layer Procedural Cybernetic Core with slow controlled rotation, 
- * subtle mouse inertia, hover glow, click pulse, and parameter reactivity.
+ * CYGNUS 3D Rotating Cyber Globe (Primary Visual Hero Object)
+ * Interactive 3D globe with latitude/longitude tech grid, continent neural nodes,
+ * inner energy glow, orbital rings, atmosphere particles, mouse inertia, and click reaction.
  */
 
 import * as THREE from 'three';
@@ -15,13 +15,13 @@ export class CygnusCore {
     this.scene.add(this.group);
 
     // Layer references
-    this.innerSphere = null;
-    this.outerWireframe = null;
-    this.neuralNodes = null;
-    this.neuralLines = null;
+    this.globeWireframe = null;
+    this.innerGlowSphere = null;
+    this.continentNodes = null;
+    this.connectionLines = null;
     this.orbitalRing1 = null;
     this.orbitalRing2 = null;
-    this.particleCloud = null;
+    this.atmosphereParticles = null;
 
     // Shader uniforms
     this.coreShaderUniforms = null;
@@ -43,8 +43,8 @@ export class CygnusCore {
   }
 
   init() {
-    // ── Layer 1: Inner Energy Sphere with Custom Shader ──
-    const innerGeo = new THREE.IcosahedronGeometry(36, 3);
+    // ── Layer 1: Inner Glowing Core Sphere ──
+    const innerGeo = new THREE.SphereGeometry(32, 32, 32);
     this.coreShaderUniforms = THREE.UniformsUtils.clone(CoreEnergyShader.uniforms);
     this.coreShaderUniforms.uColor.value = new THREE.Color(0x00f3ff);
 
@@ -56,55 +56,55 @@ export class CygnusCore {
       blending: THREE.AdditiveBlending,
       side: THREE.DoubleSide
     });
-    this.innerSphere = new THREE.Mesh(innerGeo, innerMat);
-    this.group.add(this.innerSphere);
+    this.innerGlowSphere = new THREE.Mesh(innerGeo, innerMat);
+    this.group.add(this.innerGlowSphere);
 
-    // ── Layer 2: Wireframe Shell ──
-    const shellGeo = new THREE.OctahedronGeometry(58, 2);
-    const shellMat = new THREE.MeshBasicMaterial({
-      color: 0xffaa00,
+    // ── Layer 2: Cyber Globe Wireframe (Latitude & Longitude Tech Grid) ──
+    const globeGeo = new THREE.SphereGeometry(46, 24, 24);
+    const globeMat = new THREE.MeshBasicMaterial({
+      color: 0x00f3ff,
       wireframe: true,
       transparent: true,
-      opacity: 0.18
+      opacity: 0.35
     });
-    this.outerWireframe = new THREE.Mesh(shellGeo, shellMat);
-    this.group.add(this.outerWireframe);
+    this.globeWireframe = new THREE.Mesh(globeGeo, globeMat);
+    this.group.add(this.globeWireframe);
 
-    // ── Layer 3 & 4: Neural Nodes & Connection Lines ──
-    this.buildNeuralNodesAndLines();
+    // ── Layer 3: Continent Data Nodes & Connection Arcs ──
+    this.buildGlobeNodes();
 
-    // ── Layer 5: Counter-Rotating Orbital Rings ──
-    const ringGeo1 = new THREE.TorusGeometry(74, 0.5, 16, 100);
+    // ── Layer 4: Orbital Satellite Rings ──
+    const ringGeo1 = new THREE.TorusGeometry(65, 0.5, 16, 120);
     const ringMat1 = new THREE.MeshBasicMaterial({
       color: 0x00f3ff,
       wireframe: true,
       transparent: true,
-      opacity: 0.25
+      opacity: 0.3
     });
     this.orbitalRing1 = new THREE.Mesh(ringGeo1, ringMat1);
     this.orbitalRing1.rotation.x = Math.PI / 3;
     this.group.add(this.orbitalRing1);
 
-    const ringGeo2 = new THREE.TorusGeometry(88, 0.4, 16, 100);
+    const ringGeo2 = new THREE.TorusGeometry(78, 0.4, 16, 120);
     const ringMat2 = new THREE.MeshBasicMaterial({
       color: 0x5e5ce6,
       wireframe: true,
       transparent: true,
-      opacity: 0.2
+      opacity: 0.22
     });
     this.orbitalRing2 = new THREE.Mesh(ringGeo2, ringMat2);
     this.orbitalRing2.rotation.y = Math.PI / 4;
     this.group.add(this.orbitalRing2);
 
-    // ── Layer 6: Outer Floating Particle Cloud ──
-    const pCount = 500;
+    // ── Layer 5: Atmosphere Particle Dust ──
+    const pCount = 450;
     const pPositions = new Float32Array(pCount * 3);
     for (let i = 0; i < pCount; i++) {
       const u = Math.random();
       const v = Math.random();
       const theta = u * Math.PI * 2;
       const phi = Math.acos(2 * v - 1);
-      const r = 50 + Math.random() * 40;
+      const r = 52 + Math.random() * 30;
 
       pPositions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
       pPositions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
@@ -116,18 +116,19 @@ export class CygnusCore {
       color: 0x00f3ff,
       size: 1.8,
       transparent: true,
-      opacity: 0.55,
+      opacity: 0.6,
       blending: THREE.AdditiveBlending
     });
-    this.particleCloud = new THREE.Points(pGeo, pMat);
-    this.group.add(this.particleCloud);
+    this.atmosphereParticles = new THREE.Points(pGeo, pMat);
+    this.group.add(this.atmosphereParticles);
   }
 
-  buildNeuralNodesAndLines() {
-    const nodeCount = 45;
+  buildGlobeNodes() {
+    const nodeCount = 50;
     const nodePositions = [];
-    const radius = 45;
+    const radius = 46.5;
 
+    // Fibonacci sphere distribution for global continent node points
     for (let i = 0; i < nodeCount; i++) {
       const phi = Math.acos(-1 + (2 * i) / nodeCount);
       const theta = Math.sqrt(nodeCount * Math.PI) * phi;
@@ -137,19 +138,19 @@ export class CygnusCore {
       nodePositions.push(new THREE.Vector3(x, y, z));
     }
 
-    // Nodes (Points)
+    // Nodes (Glow Points)
     const nodeGeo = new THREE.BufferGeometry().setFromPoints(nodePositions);
     const nodeMat = new THREE.PointsMaterial({
-      color: 0x00f3ff,
-      size: 3.5,
+      color: 0xffaa00,
+      size: 3.8,
       transparent: true,
-      opacity: 0.75,
+      opacity: 0.85,
       blending: THREE.AdditiveBlending
     });
-    this.neuralNodes = new THREE.Points(nodeGeo, nodeMat);
-    this.group.add(this.neuralNodes);
+    this.continentNodes = new THREE.Points(nodeGeo, nodeMat);
+    this.group.add(this.continentNodes);
 
-    // Connecting Lines
+    // Connection Arcs across Globe Surface
     const linePositions = [];
     for (let i = 0; i < nodeCount; i++) {
       for (let j = i + 1; j < nodeCount; j++) {
@@ -164,11 +165,11 @@ export class CygnusCore {
     const lineMat = new THREE.LineBasicMaterial({
       color: 0x00f3ff,
       transparent: true,
-      opacity: 0.2,
+      opacity: 0.35,
       blending: THREE.AdditiveBlending
     });
-    this.neuralLines = new THREE.LineSegments(lineGeo, lineMat);
-    this.group.add(this.neuralLines);
+    this.connectionLines = new THREE.LineSegments(lineGeo, lineMat);
+    this.group.add(this.connectionLines);
   }
 
   setHover(hovered) {
@@ -186,11 +187,11 @@ export class CygnusCore {
   }
 
   update(time, reducedMotion = false) {
-    // Smooth lerp hover intensity
+    // Lerp hover intensity
     const targetHover = this.isHovered ? 1 : 0;
     this.hoverIntensity += (targetHover - this.hoverIntensity) * 0.05;
 
-    // Handle controlled pulse shockwave decay
+    // Pulse shockwave decay
     let pulseVal = 0;
     if (this.isPulsing) {
       this.pulseTime += 0.03;
@@ -206,38 +207,37 @@ export class CygnusCore {
       this.coreShaderUniforms.uPulse.value = pulseVal + this.hoverIntensity * 0.2;
     }
 
-    // Slow, calm, cinematic rotations
+    // Continuous smooth Globe rotation (Earth axis tilt)
     const speedMult = (this.params.autonomy / 50) * (reducedMotion ? 0.15 : 0.6);
 
-    if (this.innerSphere) {
-      this.innerSphere.rotation.y = time * 0.06 * speedMult;
-      this.innerSphere.rotation.x = Math.sin(time * 0.04) * 0.05;
+    // Globe Y-axis rotation (Rotating Globe)
+    this.group.rotation.y = time * 0.08 * speedMult;
+    this.group.rotation.x = 0.25; // Subtle 15-degree axial tilt
+
+    if (this.innerGlowSphere) {
+      this.innerGlowSphere.rotation.y = -time * 0.04 * speedMult;
     }
 
-    if (this.outerWireframe) {
-      this.outerWireframe.rotation.y = -time * 0.08 * speedMult;
-      this.outerWireframe.rotation.z = time * 0.03 * speedMult;
-      const adaptScale = 1.0 + Math.sin(time * 1.2) * (this.params.adaptation / 800) + pulseVal * 0.15;
-      this.outerWireframe.scale.set(adaptScale, adaptScale, adaptScale);
+    if (this.globeWireframe) {
+      const adaptScale = 1.0 + Math.sin(time * 1.2) * (this.params.adaptation / 900) + pulseVal * 0.12;
+      this.globeWireframe.scale.set(adaptScale, adaptScale, adaptScale);
     }
 
     if (this.orbitalRing1) {
-      this.orbitalRing1.rotation.z = time * 0.1 * speedMult;
-      this.orbitalRing1.rotation.y = time * 0.05 * speedMult;
+      this.orbitalRing1.rotation.z = time * 0.12 * speedMult;
     }
 
     if (this.orbitalRing2) {
-      this.orbitalRing2.rotation.z = -time * 0.12 * speedMult;
-      this.orbitalRing2.rotation.x = time * 0.06 * speedMult;
+      this.orbitalRing2.rotation.z = -time * 0.15 * speedMult;
     }
 
-    if (this.particleCloud) {
-      this.particleCloud.rotation.y = time * 0.02 * speedMult;
+    if (this.atmosphereParticles) {
+      this.atmosphereParticles.rotation.y = -time * 0.02 * speedMult;
     }
 
-    if (this.neuralLines) {
-      const lineOp = 0.2 + (this.params.bandwidth / 300) + pulseVal * 0.3 + this.hoverIntensity * 0.15;
-      this.neuralLines.material.opacity = Math.min(lineOp, 0.75);
+    if (this.connectionLines) {
+      const lineOp = 0.35 + (this.params.bandwidth / 300) + pulseVal * 0.3;
+      this.connectionLines.material.opacity = Math.min(lineOp, 0.85);
     }
   }
 
