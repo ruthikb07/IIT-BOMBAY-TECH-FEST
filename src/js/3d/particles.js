@@ -1,6 +1,6 @@
 /**
- * CYGNUS Background Particles & Grid Subsystem
- * Starfield, dust particles, and persistent 3D spatial grid.
+ * CYGNUS Background Particles & Grid Subsystem (Refined & Restrained)
+ * Subtle starfield, floating dust particles, and persistent 3D spatial grid.
  */
 
 import * as THREE from 'three';
@@ -27,13 +27,13 @@ export class BackgroundEnvironment {
   }
 
   createStarfield() {
-    const count = this.quality.particleCount;
+    const count = Math.min(this.quality.particleCount, 1200); // Restrained count for atmosphere
     const positions = new Float32Array(count * 3);
     const colors = new Float32Array(count * 3);
 
     const cyanColor = new THREE.Color(0x00f3ff);
     const amberColor = new THREE.Color(0xffaa00);
-    const dimColor = new THREE.Color(0x2a364f);
+    const dimColor = new THREE.Color(0x1a263f);
 
     for (let i = 0; i < count; i++) {
       const radius = 250 + Math.random() * 650;
@@ -45,7 +45,7 @@ export class BackgroundEnvironment {
       positions[i * 3 + 2] = radius * Math.cos(phi);
 
       const r = Math.random();
-      const col = r > 0.85 ? cyanColor : r > 0.7 ? amberColor : dimColor;
+      const col = r > 0.9 ? cyanColor : r > 0.8 ? amberColor : dimColor;
       colors[i * 3] = col.r;
       colors[i * 3 + 1] = col.g;
       colors[i * 3 + 2] = col.b;
@@ -56,10 +56,10 @@ export class BackgroundEnvironment {
     geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const mat = new THREE.PointsMaterial({
-      size: this.quality.name === 'LOW' ? 1.2 : 1.8,
+      size: this.quality.name === 'LOW' ? 1.0 : 1.4,
       vertexColors: true,
       transparent: true,
-      opacity: 0.6,
+      opacity: 0.35, // Restrained subtle background
       blending: THREE.AdditiveBlending
     });
 
@@ -69,19 +69,18 @@ export class BackgroundEnvironment {
 
   createSpatialGrid() {
     const size = 1200;
-    const divisions = 60;
-    const gridHelper = new THREE.GridHelper(size, divisions, 0x00f3ff, 0x0c1e38);
+    const divisions = 50;
+    const gridHelper = new THREE.GridHelper(size, divisions, 0x00f3ff, 0x071529);
     gridHelper.position.y = -180;
     gridHelper.material.transparent = true;
-    gridHelper.material.opacity = 0.18;
+    gridHelper.material.opacity = 0.12;
     this.gridMesh = gridHelper;
     this.starGroup.add(this.gridMesh);
   }
 
   update(time, reducedMotion = false) {
     if (!reducedMotion && this.starPoints) {
-      this.starPoints.rotation.y = time * 0.015;
-      this.starPoints.rotation.x = Math.sin(time * 0.01) * 0.02;
+      this.starPoints.rotation.y = time * 0.005; // Slow ambient rotation
     }
   }
 

@@ -1,6 +1,6 @@
 /**
- * CYGNUS Camera Manager
- * Smooth perspective camera control with mouse/touch inertia and state interpolation.
+ * CYGNUS Camera Manager (Refined & Stabilized)
+ * Smooth perspective camera control with restrained mouse inertia and smooth state interpolation.
  */
 
 import * as THREE from 'three';
@@ -29,9 +29,9 @@ export class SceneCamera {
   }
 
   setMousePosition(normalizedX, normalizedY) {
-    // Restrained mouse influence (-15 to 15 units)
-    this.targetMouseOffset.x = normalizedX * 15;
-    this.targetMouseOffset.y = -normalizedY * 15;
+    // Restrained mouse influence (-6 to +6 units for subtle parallax without camera shaking)
+    this.targetMouseOffset.x = normalizedX * 6;
+    this.targetMouseOffset.y = -normalizedY * 6;
   }
 
   setTargetState(positionVector, lookAtVector) {
@@ -40,16 +40,16 @@ export class SceneCamera {
   }
 
   update(reducedMotion = false) {
-    const lerpFactor = reducedMotion ? 0.02 : 0.05;
+    const lerpFactor = reducedMotion ? 0.015 : 0.035;
 
-    // Smoothly lerp mouse offset
+    // Smoothly lerp mouse offset with high damping
     if (!reducedMotion) {
-      this.mouseOffset.lerp(this.targetMouseOffset, 0.04);
+      this.mouseOffset.lerp(this.targetMouseOffset, 0.03);
     } else {
       this.mouseOffset.set(0, 0);
     }
 
-    // Interpolate camera position and target
+    // Interpolate camera position and target predictably
     this.currentPosition.lerp(this.targetPosition, lerpFactor);
     this.currentLookAt.lerp(this.targetLookAt, lerpFactor);
 
