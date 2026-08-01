@@ -5,14 +5,16 @@
 
 import * as THREE from 'three';
 
+const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 768;
+
 export const CAMERA_STATES = {
   HERO: {
     name: 'HERO',
-    cameraPos: new THREE.Vector3(0, 0, 180),
-    cameraTarget: new THREE.Vector3(0, 0, 0),
+    cameraPos: new THREE.Vector3(isDesktop ? -30 : 0, 0, 180),
+    cameraTarget: new THREE.Vector3(isDesktop ? -30 : 0, 0, 0),
     coreScale: 1.0,
     coreOpacity: 1.0,
-    convergenceOpacity: 0.2,
+    convergenceOpacity: 0.15,
     scannerOpacity: 0.0
   },
   CONVERGENCE: {
@@ -20,7 +22,7 @@ export const CAMERA_STATES = {
     cameraPos: new THREE.Vector3(0, 0, 140),
     cameraTarget: new THREE.Vector3(0, 0, 0),
     coreScale: 0.85,
-    coreOpacity: 0.6,
+    coreOpacity: 0.5,
     convergenceOpacity: 1.0,
     scannerOpacity: 0.0
   },
@@ -28,8 +30,8 @@ export const CAMERA_STATES = {
     name: 'PARAMETERS',
     cameraPos: new THREE.Vector3(0, 10, 95),
     cameraTarget: new THREE.Vector3(0, 0, 0),
-    coreScale: 0.6,
-    coreOpacity: 0.4,
+    coreScale: 0.5,
+    coreOpacity: 0.3,
     convergenceOpacity: 0.9,
     scannerOpacity: 0.0
   },
@@ -46,10 +48,10 @@ export const CAMERA_STATES = {
     name: 'FINAL',
     cameraPos: new THREE.Vector3(0, 0, 230),
     cameraTarget: new THREE.Vector3(0, 0, 0),
-    coreScale: 1.2,
+    coreScale: 1.1,
     coreOpacity: 1.0,
-    convergenceOpacity: 0.6,
-    scannerOpacity: 0.2
+    convergenceOpacity: 0.5,
+    scannerOpacity: 0.15
   }
 };
 

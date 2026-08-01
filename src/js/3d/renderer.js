@@ -1,6 +1,6 @@
 /**
- * CYGNUS WebGL Renderer Module
- * Single persistent WebGLRenderer management with adaptive pixel ratio & cleanup.
+ * CYGNUS WebGL Renderer Module (Dark Cinematic Technology Experience)
+ * Single persistent WebGLRenderer management with dark background clear & adaptive pixel ratio.
  */
 
 import * as THREE from 'three';
@@ -21,7 +21,7 @@ export class SceneRenderer {
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
       antialias: this.quality.antialias,
-      alpha: true,
+      alpha: false,
       powerPreference: 'high-performance',
       stencil: false,
       depth: true
@@ -29,8 +29,9 @@ export class SceneRenderer {
 
     this.renderer.setSize(width, height, false);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, this.quality.maxPixelRatio));
+    this.renderer.setClearColor(0x05070a, 1.0); // Deep near-black cinematic background
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 1.1;
+    this.renderer.toneMappingExposure = 0.95;
 
     qualityManager.onQualityChange((newProfile) => {
       this.quality = newProfile;
