@@ -22,7 +22,7 @@ export const CAMERA_STATES = {
     cameraPos: new THREE.Vector3(0, 0, 140),
     cameraTarget: new THREE.Vector3(0, 0, 0),
     coreScale: 0.85,
-    coreOpacity: 0.5,
+    coreOpacity: 0.4,
     convergenceOpacity: 1.0,
     scannerOpacity: 0.0
   },
@@ -31,8 +31,8 @@ export const CAMERA_STATES = {
     cameraPos: new THREE.Vector3(0, 10, 95),
     cameraTarget: new THREE.Vector3(0, 0, 0),
     coreScale: 0.5,
-    coreOpacity: 0.3,
-    convergenceOpacity: 0.9,
+    coreOpacity: 0.25,
+    convergenceOpacity: 0.8,
     scannerOpacity: 0.0
   },
   SCANNER: {
@@ -46,12 +46,12 @@ export const CAMERA_STATES = {
   },
   FINAL: {
     name: 'FINAL',
-    cameraPos: new THREE.Vector3(0, 0, 230),
+    cameraPos: new THREE.Vector3(0, 0, 240),
     cameraTarget: new THREE.Vector3(0, 0, 0),
-    coreScale: 1.1,
-    coreOpacity: 1.0,
-    convergenceOpacity: 0.5,
-    scannerOpacity: 0.15
+    coreScale: 0.65,
+    coreOpacity: 0.2, // Low opacity for clean background depth behind forms & cards
+    convergenceOpacity: 0.1,
+    scannerOpacity: 0.0
   }
 };
 
