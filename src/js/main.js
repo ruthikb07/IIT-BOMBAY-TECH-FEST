@@ -1,11 +1,10 @@
 /**
- * CYGNUS Application Coordinator (Phase 2 — Final)
+ * CYGNUS Application Coordinator (Phase 3 Full 3D Transformation)
  * IIT BOMBAY TECHFEST COMPETITION SUBMISSION
  *
- * Manages: 3D scene, audio, mobile menu, countdown, sliders,
- * events, timeline, terminal, badge, partners, cursor,
- * GSAP scroll reveals, IntersectionObserver visibility optimization,
- * and global keyboard accessibility.
+ * Coordinates: 3D scene, 5 camera states, convergence slider, parameter matrix,
+ * cyborg 3D scanner, audio, mobile menu, countdown, competition matrix,
+ * timeline, CLI terminal, holographic badge generator, and accessibility.
  */
 
 import gsap from 'gsap';
@@ -37,6 +36,7 @@ class CygnusApp {
       this.initMobileMenu();
       this.initCountdown();
       this.initNeuralVisualizer();
+      this.initScannerHUD();
       this.initEventsMatrix();
       this.initTimeline();
       this.initTerminal();
@@ -62,7 +62,7 @@ class CygnusApp {
     }
   }
 
-  /* ─── 3D Scene ─── */
+  /* ─── 3D Scene Initialization ─── */
   init3DScene() {
     const canvas3d = document.getElementById('hero-3d-canvas');
     const canvas2d = document.getElementById('hero-2d-fallback');
@@ -125,7 +125,6 @@ class CygnusApp {
     }
 
     const targetDate = new Date(targetStr).getTime();
-
     const pad = (n) => String(n).padStart(2, '0');
 
     const updateTimer = () => {
@@ -146,7 +145,6 @@ class CygnusApp {
       const minutes = Math.floor((diff % 3600000) / 60000);
       const seconds = Math.floor((diff % 60000) / 1000);
 
-      // Only update text nodes — avoid full innerHTML rebuild each second
       let units = box.querySelectorAll('.countdown-val');
       if (units.length === 4) {
         units[0].textContent = pad(days);
@@ -170,7 +168,7 @@ class CygnusApp {
     setInterval(updateTimer, 1000);
   }
 
-  /* ─── Neural Parameter Visualizer ─── */
+  /* ─── 3D Neural Parameters & Convergence Slider ─── */
   initNeuralVisualizer() {
     const bind = (sliderId, labelId, paramKey) => {
       const slider = document.getElementById(sliderId);
@@ -196,8 +194,33 @@ class CygnusApp {
         if (val < 35) convergenceLbl.textContent = 'BIOLOGICAL SYNAPSE';
         else if (val > 65) convergenceLbl.textContent = 'SYNTHETIC CORE';
         else convergenceLbl.textContent = 'HUMAN × MACHINE CONVERGENCE';
+
+        if (this.scene3d) this.scene3d.setConvergence(val);
       });
     }
+  }
+
+  /* ─── 3D Cyborg Scanner HUD ─── */
+  initScannerHUD() {
+    const btns = document.querySelectorAll('#scanner-hotspot-btns .scanner-btn');
+    const titleEl = document.getElementById('scanner-target-title');
+    const statusEl = document.getElementById('scanner-target-status');
+
+    btns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        btns.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const hotspotId = btn.getAttribute('data-hotspot');
+        if (this.scene3d && this.scene3d.scanner) {
+          const hpData = this.scene3d.scanner.selectHotspot(hotspotId);
+          if (hpData) {
+            if (titleEl) titleEl.textContent = hpData.name;
+            if (statusEl) statusEl.textContent = hpData.status;
+          }
+        }
+      });
+    });
   }
 
   /* ─── Events Matrix ─── */
@@ -276,7 +299,7 @@ class CygnusApp {
     if (dot && ring) new CustomCursor(dot, ring);
   }
 
-  /* ─── Keyboard Accessibility ─── */
+  /* ─── Keyboard Accessibility & CTA actions ─── */
   initKeyboardAccessibility() {
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
@@ -291,18 +314,36 @@ class CygnusApp {
       }
     });
 
-    // Audio hover sounds on interactive elements
     document.querySelectorAll('.btn-tech, .nav-link, .cat-btn, .tab-btn').forEach((el) => {
       el.addEventListener('mouseenter', () => audioEngine.playHoverSound());
     });
   }
 
-  /* ─── GSAP Scroll Reveal Animations ─── */
+  /* ─── 3D Camera State Scroll Choreography ─── */
   initScrollAnimations() {
-    // Skip heavy animations when reduced motion is preferred
     if (perfManager.prefersReducedMotion) return;
 
-    // Section header reveals
+    // Synchronize page scroll to 3D Camera States
+    const mapState = (triggerId, stateKey) => {
+      const section = document.getElementById(triggerId);
+      if (section && this.scene3d) {
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top 60%',
+          end: 'bottom 40%',
+          onEnter: () => this.scene3d.setCameraState(stateKey),
+          onEnterBack: () => this.scene3d.setCameraState(stateKey)
+        });
+      }
+    };
+
+    mapState('hero', 'HERO');
+    mapState('concept', 'CONVERGENCE');
+    mapState('scanner', 'SCANNER');
+    mapState('events', 'FINAL');
+    mapState('partners', 'FINAL');
+
+    // Section headers reveal
     gsap.utils.toArray('.section-header').forEach((el) => {
       gsap.from(el, {
         scrollTrigger: {
@@ -311,13 +352,13 @@ class CygnusApp {
           toggleActions: 'play none none none'
         },
         opacity: 0,
-        y: 40,
+        y: 35,
         duration: 0.8,
         ease: 'power3.out'
       });
     });
 
-    // HUD boxes stagger reveal
+    // HUD boxes reveal
     gsap.utils.toArray('.section').forEach((section) => {
       const boxes = section.querySelectorAll('.hud-box');
       if (boxes.length) {
@@ -328,7 +369,7 @@ class CygnusApp {
             toggleActions: 'play none none none'
           },
           opacity: 0,
-          y: 30,
+          y: 25,
           stagger: 0.1,
           duration: 0.6,
           ease: 'power2.out'
@@ -336,7 +377,7 @@ class CygnusApp {
       }
     });
 
-    // Hero content entrance
+    // Hero entrance
     const heroOverlay = document.querySelector('.hero-interactive-overlay');
     if (heroOverlay) {
       gsap.from(heroOverlay.children, {
@@ -344,18 +385,18 @@ class CygnusApp {
         y: 30,
         stagger: 0.12,
         duration: 0.8,
-        delay: 0.3,
+        delay: 0.2,
         ease: 'power3.out'
       });
     }
   }
 
-  /* ─── IntersectionObserver for Visibility Optimization ─── */
+  /* ─── Visibility Optimization ─── */
   initVisibilityOptimization() {
     if (typeof IntersectionObserver === 'undefined') return;
 
-    const heroSection = document.getElementById('hero');
-    if (heroSection && this.scene3d) {
+    const mainEl = document.querySelector('main');
+    if (mainEl && this.scene3d) {
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
@@ -371,9 +412,9 @@ class CygnusApp {
             }
           });
         },
-        { threshold: 0.05 }
+        { threshold: 0.01 }
       );
-      observer.observe(heroSection);
+      observer.observe(mainEl);
     }
   }
 }

@@ -16,6 +16,12 @@
   <link rel="stylesheet" href="./src/styles/components.css">
 </head>
 <body>
+  <!-- Persistent WebGL 3D Canvas -->
+  <div id="cygnus-canvas-container" class="cygnus-canvas-container">
+    <canvas id="hero-3d-canvas" class="cygnus-3d-canvas" aria-label="Interactive 3D CYGNUS World"></canvas>
+    <canvas id="hero-2d-fallback" class="cygnus-2d-fallback" style="display: none;"></canvas>
+  </div>
+
   <!-- Custom Cursor Elements -->
   <div id="custom-cursor" class="custom-cursor"></div>
   <div id="cursor-ring" class="cursor-ring"></div>
@@ -39,6 +45,7 @@
     <nav class="nav-links" aria-label="Desktop Navigation">
       <a href="#hero" class="nav-link">CORE</a>
       <a href="#concept" class="nav-link">CONVERGENCE</a>
+      <a href="#scanner" class="nav-link">SCANNER</a>
       <a href="#events" class="nav-link">COMPETITIONS</a>
       <a href="#schedule" class="nav-link">TIMELINE</a>
       <a href="#terminal" class="nav-link">TERMINAL</a>
@@ -192,6 +199,71 @@
             <div style="border-top: 1px solid var(--border-dim); padding-top: 16px; display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.75rem; color: var(--amber-hud);">
               <span>STATUS: ADAPTIVE SYNC</span>
               <span>IITB CONCEPT LAB</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3D CYBORG SYSTEM SCANNER SECTION -->
+    <section id="scanner" class="section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">02 // HOLOGRAPHIC DIAGNOSTICS</div>
+          <h2 class="section-title">CYBORG SYSTEM SCANNER</h2>
+          <p class="section-subtitle">
+            Interactive 3D cybernetic diagnostic interface. Select subsystem hotspots to inspect real-time neural and motor node telemetries.
+          </p>
+        </div>
+
+        <div class="scanner-grid">
+          <!-- Hotspots Control Panel -->
+          <div class="hud-box scanner-controls-card">
+            <h3 style="font-family: var(--font-display); font-size: 1.1rem; color: var(--text-main); margin-bottom: 16px;">
+              SUBSYSTEM HOTSPOTS
+            </h3>
+            
+            <div id="scanner-hotspot-btns" class="scanner-hotspot-list">
+              <button class="scanner-btn active" data-hotspot="NEURAL">01 // NEURAL SYSTEM</button>
+              <button class="scanner-btn" data-hotspot="OPTICAL">02 // OPTICAL SENSORS</button>
+              <button class="scanner-btn" data-hotspot="COGNITIVE">03 // COGNITIVE ENGINE</button>
+              <button class="scanner-btn" data-hotspot="MOTOR">04 // MOTOR ACTUATORS</button>
+              <button class="scanner-btn" data-hotspot="CORE">05 // CYGNUS CORE LINK</button>
+            </div>
+
+            <div class="scanner-status-box">
+              <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--cyan-core); margin-bottom: 6px;">
+                ACTIVE TARGET DIAGNOSTIC
+              </div>
+              <div id="scanner-target-title" style="font-family: var(--font-display); font-size: 1.05rem; color: var(--text-main); margin-bottom: 6px;">
+                NEURAL SYSTEM
+              </div>
+              <div id="scanner-target-status" style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--amber-hud);">
+                OPTIMAL // SYNAPSE LATENCY 0.4ms
+              </div>
+            </div>
+          </div>
+
+          <!-- Real-time Diagnostic HUD -->
+          <div class="hud-box scanner-telemetry-card">
+            <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--cyan-core); margin-bottom: 12px; display: flex; justify-content: space-between;">
+              <span>SYSTEM SCANNER v3.0</span>
+              <span class="pulse-indicator">● LIVE SCAN</span>
+            </div>
+
+            <div style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+              Vertical laser plane emits continuous volumetric data pulses across the cybernetic structure. Subsystem telemetry confirms 100% synchronization between biological pathways and synthetic core logic.
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-family: var(--font-mono); font-size: 0.75rem;">
+              <div style="background: rgba(0,243,255,0.05); padding: 10px; border: 1px solid var(--border-dim);">
+                <div style="color: var(--text-muted); margin-bottom: 4px;">SCAN FREQUENCY</div>
+                <div style="color: var(--cyan-core); font-weight: 700;">120 Hz HOLO</div>
+              </div>
+              <div style="background: rgba(255,170,0,0.05); padding: 10px; border: 1px solid var(--border-dim);">
+                <div style="color: var(--text-muted); margin-bottom: 4px;">SYNAPSE SYNC</div>
+                <div style="color: var(--amber-hud); font-weight: 700;">99.8% ACCURACY</div>
+              </div>
             </div>
           </div>
         </div>
