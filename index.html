@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CYGNUS — Human × Machine | IIT Bombay Techfest Concept</title>
+  <meta name="description" content="CYGNUS — Human × Machine. The next evolution of interaction. Interactive competition concept showcase built for IIT Bombay Techfest.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@600;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="./src/styles/main.css">
+  <link rel="stylesheet" href="./src/styles/components.css">
+</head>
+<body>
+  <!-- Custom Cursor Elements -->
+  <div id="custom-cursor" class="custom-cursor"></div>
+  <div id="cursor-ring" class="cursor-ring"></div>
+
+  <!-- Top Demo Disclaimer Banner -->
+  <div class="demo-banner" role="banner">
+    <span>[DEMO NOTICE]</span>
+    <span>CONCEPT SUBMISSION FOR IIT BOMBAY TECHFEST — ALL EVENT DATA & SCHEDULES ARE DEMO PLACEHOLDERS</span>
+  </div>
+
+  <!-- Fixed Navigation HUD -->
+  <header class="nav-hud">
+    <div class="nav-brand">
+      <div class="nav-logo-mark"></div>
+      <div>
+        <div class="nav-title">CYGNUS</div>
+        <div class="nav-context-tag">IIT BOMBAY TECHFEST CONCEPT</div>
+      </div>
+    </div>
+
+    <nav class="nav-links" aria-label="Desktop Navigation">
+      <a href="#hero" class="nav-link">CORE</a>
+      <a href="#concept" class="nav-link">CONVERGENCE</a>
+      <a href="#events" class="nav-link">COMPETITIONS</a>
+      <a href="#schedule" class="nav-link">TIMELINE</a>
+      <a href="#terminal" class="nav-link">TERMINAL</a>
+      <a href="#badge" class="nav-link">PASS GENERATOR</a>
+      <a href="#partners" class="nav-link">NETWORK</a>
+    </nav>
+
+    <div class="nav-controls">
+      <div id="hud-utc-clock" style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--cyan-core); display: none; @media(min-width: 600px){display: block;}">00:00:00 UTC</div>
+      
+      <button id="audio-toggle-btn" class="audio-toggle-btn" aria-label="Toggle Audio System">
+        <span class="audio-lbl" style="font-family: var(--font-mono); font-size: 0.65rem;">MUTED</span>
+      </button>
+
+      <!-- Mobile Menu Hamburger Button -->
+      <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle Mobile Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Fullscreen Mobile Navigation Menu -->
+  <div id="mobile-menu-overlay" class="mobile-menu-overlay" role="dialog" aria-modal="true" aria-label="Mobile Navigation Menu">
+    <button id="mobile-menu-close" class="mobile-menu-close" aria-label="Close Mobile Menu">✕</button>
+    <div class="mobile-menu-links">
+      <a href="#hero" class="mobile-nav-link">01 // CORE</a>
+      <a href="#concept" class="mobile-nav-link">02 // CONVERGENCE</a>
+      <a href="#events" class="mobile-nav-link">03 // COMPETITIONS</a>
+      <a href="#schedule" class="mobile-nav-link">04 // TIMELINE</a>
+      <a href="#terminal" class="mobile-nav-link">05 // TERMINAL</a>
+      <a href="#badge" class="mobile-nav-link">06 // PASS GENERATOR</a>
+      <a href="#partners" class="mobile-nav-link">07 // NETWORK</a>
+    </div>
+  </div>
+
+  <!-- Main Application Content -->
+  <main>
+    <!-- HERO SECTION -->
+    <section id="hero" class="hero-section">
+      <div class="bg-grid"></div>
+      
+      <!-- 3D Canvas & 2D Fallback -->
+      <div class="hero-canvas-container">
+        <canvas id="hero-3d-canvas" aria-label="Interactive 3D CYGNUS Core"></canvas>
+        <canvas id="hero-2d-fallback" style="display: none;"></canvas>
+      </div>
+
+      <div class="container hero-content">
+        <div class="hero-interactive-overlay">
+          <div class="hero-badge">
+            <span style="display: inline-block; width: 6px; height: 6px; background: var(--cyan-core); border-radius: 50%; box-shadow: 0 0 8px var(--cyan-core);"></span>
+            CYGNUS PHASE 2 — HUMAN × MACHINE
+          </div>
+
+          <h1 class="hero-title glitch-text" data-text="CYGNUS — HUMAN × MACHINE">
+            CYGNUS — <span>HUMAN × MACHINE</span>
+          </h1>
+
+          <p class="hero-subtitle">
+            THE NEXT EVOLUTION OF INTERACTION.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#concept" class="btn-tech-primary btn-tech">ENTER THE MATRIX</a>
+            <a href="#events" class="btn-tech">EXPLORE COMPETITIONS</a>
+            <a href="#badge" class="btn-tech">GENERATE PASS</a>
+          </div>
+
+          <!-- Configurable Countdown Bar -->
+          <div id="countdown-container" class="countdown-box">
+            <!-- Countdown units rendered via JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONCEPT / THE CONVERGENCE SECTION -->
+    <section id="concept" class="section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">01 // NEURAL DYNAMICS</div>
+          <h2 class="section-title">THE CONVERGENCE</h2>
+          <p class="section-subtitle">
+            Exploring the fusion of biological cognitive synapses with artificial neural processing models.
+          </p>
+        </div>
+
+        <div class="neural-grid">
+          <div class="hud-box neural-controls-card">
+            <h3 style="font-family: var(--font-display); font-size: 1.2rem; color: var(--text-main); margin-bottom: 20px;">
+              3D PARAMETER MATRIX
+            </h3>
+            
+            <div class="slider-group">
+              <div class="slider-header">
+                <span>NEURAL BANDWIDTH</span>
+                <span id="lbl-bandwidth">50%</span>
+              </div>
+              <input type="range" id="slider-bandwidth" class="slider-input" min="10" max="100" step="5" value="50">
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-header">
+                <span>MACHINE AUTONOMY</span>
+                <span id="lbl-autonomy">50%</span>
+              </div>
+              <input type="range" id="slider-autonomy" class="slider-input" min="10" max="100" step="5" value="50">
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-header">
+                <span>SYSTEM ADAPTATION</span>
+                <span id="lbl-adaptation">50%</span>
+              </div>
+              <input type="range" id="slider-adaptation" class="slider-input" min="10" max="100" step="5" value="50">
+            </div>
+
+            <div style="background: rgba(0, 243, 255, 0.05); border: 1px solid var(--border-hud); padding: 16px; margin-top: 24px;">
+              <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--cyan-core); margin-bottom: 6px;">
+                ADAPTIVE PERFORMANCE MONITOR
+              </div>
+              <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted);">
+                Targeting smooth frame rate with automatic fallback resolution scaling based on device GPU load.
+              </div>
+            </div>
+          </div>
+
+          <div class="hud-box" style="padding: 32px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div class="section-tag" style="margin-bottom: 16px;">BIOLOGICAL × SYNTHETIC</div>
+              <h3 style="font-family: var(--font-display); font-size: 1.3rem; color: var(--text-main); margin-bottom: 12px;">
+                CONVERGENCE SLIDER
+              </h3>
+              
+              <div style="margin-bottom: 24px;">
+                <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">
+                  <span>BIOLOGICAL</span>
+                  <span id="convergence-state-lbl" style="color: var(--cyan-core); font-weight: 700;">CONVERGENCE</span>
+                  <span>SYNTHETIC</span>
+                </div>
+                <input type="range" id="slider-convergence" class="slider-input" min="0" max="100" step="1" value="50">
+              </div>
+
+              <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+                Biological neural networks excel at abstract contextual inference, while synthetic machine nodes deliver deterministic micro-latency execution. CYGNUS bridges this gap into a unified interactive interface.
+              </p>
+            </div>
+            
+            <div style="border-top: 1px solid var(--border-dim); padding-top: 16px; display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.75rem; color: var(--amber-hud);">
+              <span>STATUS: ADAPTIVE SYNC</span>
+              <span>IITB CONCEPT LAB</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPETITIONS & EVENTS MATRIX SECTION -->
+    <section id="events" class="section" style="background: var(--bg-surface);">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">02 // COMPETITION MATRIX</div>
+          <h2 class="section-title">FEATURED DEMO TRACKS</h2>
+          <p class="section-subtitle">
+            Explore concept competition tracks designed for the Cygnus ecosystem. All details are structured demo placeholders.
+          </p>
+        </div>
+
+        <div class="events-toolbar">
+          <div id="events-categories" class="events-categories" role="tablist" aria-label="Category Filters"></div>
+          <input type="text" id="events-search" class="search-input" placeholder="Search track name or tag..." aria-label="Search competition tracks">
+        </div>
+
+        <div id="events-grid" class="events-grid"></div>
+      </div>
+    </section>
+
+    <!-- SCHEDULE TIMELINE SECTION -->
+    <section id="schedule" class="section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">03 // EVENT TIMELINE</div>
+          <h2 class="section-title">CONCEPT SCHEDULE</h2>
+          <p class="section-subtitle">
+            Tabbed event schedule framework with placeholder keynotes and competition stages.
+          </p>
+        </div>
+
+        <div id="timeline-tabs" class="timeline-tabs" role="tablist"></div>
+        <div id="timeline-list" class="timeline-list"></div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE TERMINAL SECTION -->
+    <section id="terminal" class="section" style="background: var(--bg-surface);">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">04 // SYSTEM INTERFACE</div>
+          <h2 class="section-title">CYGNUS TERMINAL CLI</h2>
+          <p class="section-subtitle">
+            Interact with the CYGNUS HUD using command line prompts. Supports Up/Down arrow command history.
+          </p>
+        </div>
+
+        <div class="terminal-window">
+          <div class="terminal-header">
+            <div class="terminal-dots">
+              <div class="terminal-dot red"></div>
+              <div class="terminal-dot yellow"></div>
+              <div class="terminal-dot green"></div>
+            </div>
+            <div>cygnus-os // bash</div>
+          </div>
+          <div id="terminal-output" class="terminal-body"></div>
+          <div style="padding: 12px 20px; border-top: 1px solid var(--border-dim); background: #080a0f;">
+            <div class="terminal-prompt-line">
+              <span class="terminal-prompt-symbol">CYGNUS://</span>
+              <input type="text" id="terminal-input" class="terminal-input-field" placeholder="Type command (e.g. 'help', 'status', 'about', 'events', 'scan', 'matrix')..." autocomplete="off" aria-label="Terminal Command Input">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BADGE GENERATOR SECTION -->
+    <section id="badge" class="section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">05 // DEMO ACCESS PASS</div>
+          <h2 class="section-title">VISITOR PASS GENERATOR</h2>
+          <p class="section-subtitle">
+            Generate an unofficial holographic CYGNUS concept badge for competition presentation.
+          </p>
+        </div>
+
+        <div class="badge-generator-grid">
+          <div class="hud-box badge-form">
+            <div class="form-group">
+              <label class="form-label" for="badge-input-name">ATTENDEE / COMPETITOR NAME</label>
+              <input type="text" id="badge-input-name" class="form-input" value="ALEX R. VANCE" maxlength="32">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="badge-input-college">INSTITUTION / AFFILIATION</label>
+              <input type="text" id="badge-input-college" class="form-input" value="IIT BOMBAY (CONCEPT)" maxlength="32">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="badge-select-domain">TRACK DOMAIN</label>
+              <select id="badge-select-domain" class="form-input">
+                <option value="AI & NEURAL ROBOTICS">AI & NEURAL ROBOTICS</option>
+                <option value="QUANTUM COMPUTING">QUANTUM COMPUTING</option>
+                <option value="CYBERSECURITY & CTF">CYBERSECURITY & CTF</option>
+                <option value="SWARM AEROSPACE">SWARM AEROSPACE</option>
+                <option value="BIO-CYBERNETICS">BIO-CYBERNETICS</option>
+              </select>
+            </div>
+
+            <button id="badge-download-btn" class="btn-tech-primary btn-tech" style="margin-top: 12px; justify-content: center;">
+              DOWNLOAD HOLOGRAPHIC PASS (PNG)
+            </button>
+
+            <div style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--amber-hud); margin-top: 8px;">
+              * Note: Unofficial concept pass generated on HTML5 canvas for competition display only.
+            </div>
+          </div>
+
+          <div class="hud-box badge-preview-card">
+            <canvas id="badge-canvas" aria-label="Holographic Pass Preview"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PARTNERS / NETWORK SECTION -->
+    <section id="partners" class="section" style="background: var(--bg-surface);">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">06 // INFRASTRUCTURE NETWORK</div>
+          <h2 class="section-title">PARTNERS & NETWORK</h2>
+          <p class="section-subtitle">
+            Abstract geometric placeholders for future network partners and ecosystem supporters.
+          </p>
+        </div>
+
+        <div id="partners-grid" class="partners-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div>
+        <div style="font-family: var(--font-display); font-weight: 800; font-size: 1.1rem; color: var(--text-main); margin-bottom: 4px;">
+          CYGNUS — HUMAN × MACHINE
+        </div>
+        <div style="color: var(--amber-hud);">IIT BOMBAY TECHFEST COMPETITION SUBMISSION CONCEPT</div>
+      </div>
+
+      <div style="text-align: right;">
+        <div>DEVELOPED FOR TECHFEST COMPETITION SHOWCASE</div>
+        <div style="color: var(--text-dim); margin-top: 4px;">© 2026 CYGNUS PROJECT. ALL DEMO DATA CLEARLY IDENTIFIED.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- EVENT MODAL DIALOG OVERLAY -->
+  <div id="event-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Competition Details Modal">
+    <div class="hud-box modal-content">
+      <button class="modal-close-btn" aria-label="Close Modal">✕</button>
+      <div class="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Entry Script -->
+  <script type="module" src="./src/js/main.js"></script>
+</body>
+</html>
